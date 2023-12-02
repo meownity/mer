@@ -29,6 +29,10 @@
       display: block;
     }
 
+    #threeGif {
+        display : none;
+    }
+
     .container {
       width: 1000px;
       height: 600px;
@@ -39,11 +43,12 @@
   <div id="container">
     <img id="oneGif" src="https://i.pinimg.com/originals/4d/99/48/4d99482d55497209e950a702c1a6610c.gif" alt="GIF" />
     <img id="twoGif" src="https://i.pinimg.com/originals/34/e2/3e/34e23edb9c3dfc444158821285aace24.gif" alt="GIF" />
-    <img id="threeGif" src="https://i.pinimg.com/originals/70/e0/95/70e0952acded3db0418a390cf1fc57a0.gif" alt="GIF" />
+    <img id="threeGif" onload="FUCK()" src="https://i.pinimg.com/originals/70/e0/95/70e0952acded3db0418a390cf1fc57a0.gif" alt="GIF" />
     <img id="fourGif" src="https://i.pinimg.com/originals/06/e0/0d/06e00dec7aa08872c45cb221b49a80b9.gif" alt="GIF" />
   </div>
 
   <script>
+    
     const oneGif = document.getElementById('oneGif');
     const twoGif = document.getElementById('twoGif');
     const threeGif = document.getElementById('threeGif');
@@ -51,6 +56,7 @@
 
     const gifDuration = 3500;
 
+    
     oneGif.addEventListener('click', () => {
       twoGif.style.display = 'block';
       oneGif.style.display = 'none';
@@ -76,6 +82,10 @@
       startTimer();
     });
 
+    function FUCK() {
+        threeGif.style.display = 'none';
+    }
+
     function startTimer() {
       timer = setTimeout(() => {
         if (threeGif.style.display === 'none') {
@@ -90,7 +100,6 @@
         }
       }, 6800); // Set timer to switch GIFs
     }
-
     startTimer(); // Start the initial timer
   </script>
 </body>
