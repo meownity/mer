@@ -6,208 +6,230 @@
   <title>Inactivity Monitor</title>
   <style>
 
-    @font-face {
-      font-family: 'Gloria-Hallelujah-regular';
-      src: url('https://raw.githubusercontent.com/meownity/mer/main/GloriaHallelujah-Regular.ttf') format('truetype');
-    }
+@font-face {
+  font-family: 'Gloria-Hallelujah-regular';
+  src: url('https://raw.githubusercontent.com/meownity/mer/main/GloriaHallelujah-Regular.ttf') format('truetype');
+}
 
-    body {
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
-      transition: background-color 0.6s ease-in-out;
-    }
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.6s ease-in-out;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
 
-    #container {
-      text-align: center;
-      position: relative;
-    }
+#container {
+  text-align: center;
+  position: relative;
+}
 
-    #container img {
-      cursor: url('https://github.com/meownity/mer/blob/main/point_paw.png?raw=true'), auto;
-      width: 60%;
-      height: auto;
-      display: none;
-      bottom: 20px;
-      margin: 0 auto;
-    }
+#container img {
+  cursor: url('https://github.com/meownity/mer/blob/main/point_paw.png?raw=true'), auto;
+  width: 60%;
+  height: auto;
+  display: none;
+  bottom: 20px;
+  margin: 0 auto;
+}
 
-    #tail {
+#tail {
       position: relative;
       top: -20px;
-      left: -10px;
+      left: -10px; 
     }
 
-    #scared {
+#scared {
       position: relative;
-      top: -90px;
-      right: -20px;
+      top: -90px; 
+      right: -20px; 
     }
 
-    #right-container,
-    #left-container,
-    #bottom-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: absolute;
-      transform: translate(0, -10%);
-    }
+#right-container,
+#left-container,
+#bottom-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  transform: translate(0, -10%);
+}
 
-    #left-container img,
-    #bottom-container img {
-      max-width: 53%;
-      margin-top: 5px;
-    }
+#left-container img,
+#bottom-container img {
+  max-width: 53%;
+  margin-top: 5px;
+}
 
-    #right-container img {
-      max-width: 38%;
-      transform: translate(-60%, -13%);
-      cursor: pointer;
-    }
+#right-container img {
+    max-width: 38%;
+    transform: translate(-60%, -13%);
+    cursor: pointer;
+}
 
-    #right-container #khmer {
-      max-width: 47%;
-      transform: translate(-48%, 3%);
-    }
+#right-container #khmer {
+    max-width: 47%;
+    transform: translate(-48%, 3%);
+}
 
-    #left-container img {
-      transform: translate(95%, 0);
-      cursor: pointer;
-    }
+#left-container img {
+    transform: translate(95%, 0);
+    cursor: pointer;
+}
 
-    #bottom-container img {
-      transform: translate(-15%, -112%);
-      cursor: pointer;
-    }
+#bottom-container img {
+    transform: translate(-15%, -112%);
+    cursor: pointer;
+}
 
-    #right-container {
-      right: 0;
-    }
+#right-container {
+  right: 0;
+}
 
-    #left-container {
-      left: 0;
-    }
+#left-container {
+  left: 0;
+}
 
-    #bottom-container {
-      bottom: 0;
-    }
+#bottom-container {
+  bottom: 0;
+}
 
-    #saba {
-      width: 20%;
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      cursor: url('https://github.com/meownity/mer/blob/main/grab_paw.png?raw=true'), grab;
-      user-select: none;
-      display: none;
-      transform: scaleX(-1);
-    }
+#saba {
+  width: 20%;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  cursor: url('https://github.com/meownity/mer/blob/main/grab_paw.png?raw=true'), grab;
+  user-select: none;
+  display: none;
+  transform: scaleX(-1); 
+}
 
-    #feedText {
-      font-size: 35px;
-      display: none;
-      position: absolute;
-      top: 10%;
-      left: 100%;
-      transform: translateX(-100%);
-      white-space: nowrap;
-      font-family: 'Gloria-Hallelujah-regular';
-      font-weight: bold;
-      animation: scrollText 10s linear infinite;
-      text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white;
-    }
+#feedText {
+  font-size: 35px;
+  display: none;
+  position: absolute;
+  top: 10%;
+  left: 100%;
+  transform: translateX(-100%);
+  white-space: nowrap;
+  font-family: 'Gloria-Hallelujah-regular'; 
+  font-weight: bold;
+  animation: scrollText 10s linear infinite;
+  text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white;
+}
 
-    .textBox {
-      font-size: 24px;
-      font-family: 'Gloria-Hallelujah-regular';
-      font-weight: bold;
-      position: absolute;
-      top: 50%;
-      width: 40%;
-      text-align: center;
-      z-index: 1000;
-      color: white;
-    }
+#leftTextBox {
+  left: -7%;
+  top: 16%;
+}
 
-    .pop-in {
-      animation: popIn 0.5s ease-out;
-    }
+#rightTextBox {
+  right: -7%;
+  top: 16%;
+}
+.textBox {
+  font-size: 24px;
+  font-family: 'Gloria-Hallelujah-regular';
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  width: 40%; 
+  text-align: center;
+  z-index: 1000; 
+  color: white;
+}
 
-    @keyframes popIn {
-      0% {
-        transform: scale(0);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
+.pop-in {
+  animation: popIn 0.5s ease-out;
+}
 
-    @keyframes scrollText {
-      0% {
-        left: 110%;
-        transform: translateX(-100%);
-        opacity: 0;
-      }
-      5%, 95% {
-        opacity: 1;
-      }
-      100% {
-        left: -18%;
-        transform: translateX(0%);
-        opacity: 0;
-      }
-    }
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
-    #centerDot {
-      width: 10px;
-      height: 10px;
-      background-color: red;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: block;
-      z-index: 999;
-      pointer-events: none;
-    }
+@keyframes scrollText {
+  0% {
+    left: 110%;
+    transform: translateX(-100%);
+    opacity: 0;
+  }
 
-    .dropArea {
-      width: 200px;
-      height: 200px;
-      border: 2px dashed blue;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 998;
-      pointer-events: none;
-    }
+  5% {
+    opacity: 1;
+  }
 
-    .fade-out-subjects {
-      transition: opacity 0.7s ease-in-out;
-      opacity: 1;
-    }
+  95% {
+    opacity: 1;
+  }
 
-    .fade-out-subjects.fade-out {
-      opacity: 0;
-    }
+  100% {
+    left: -18%;
+    transform: translateX(0%);
+    opacity: 0;
+  }
+}
 
-    #vignette {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.96) 42%, rgba(0, 0, 0, 1) 100%);
-      pointer-events: none;
-      transition: opacity 0.1s ease;}
+#centerDot {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  z-index: 999; 
+  pointer-events: none; 
+}
+
+.dropArea {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed blue;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 998;
+  pointer-events: none;
+}
+
+.fade-out-subjects {
+  transition: opacity 0.7s ease-in-out;
+  opacity: 1;
+}
+
+.fade-out-subjects.fade-out {
+  opacity: 0;
+}
+
+#vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.96) 42%, rgba(0, 0, 0, 1) 100%);
+  pointer-events: none;
+  transition: opacity 0.1s ease-in-out;
+  opacity: 0;
+  z-index: 999;
+}
+
+body.blackout #vignette {
+  opacity: 1;
+}
 
 </style>
 </head>
@@ -253,7 +275,7 @@
 
   <script>
 
-const gifs = document.querySelectorAll('#tail, #scared, #fall-over, #sleep, #mouth, #blink, #chomp, #lights-out, #sweat');
+    const gifs = document.querySelectorAll('#tail, #scared, #fall-over, #sleep, #mouth, #blink, #chomp, #lights-out, #sweat');
     let currentIndex = 0;
     let timer;
 
