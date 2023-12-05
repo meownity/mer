@@ -28,11 +28,11 @@ body {
 
 #container img {
   cursor: url('https://github.com/meownity/mer/blob/main/point_paw.png?raw=true'), auto;
-  width: 60%; /* Adjust this value to control the size of the cat */
+  width: 60%;
   height: auto;
   display: none;
   bottom: 20px;
-  margin: 0 auto; /* Center the cat horizontally */
+  margin: 0 auto;
 }
 
 #tail {
@@ -104,7 +104,7 @@ body {
   cursor: url('https://github.com/meownity/mer/blob/main/grab_paw.png?raw=true'), grab;
   user-select: none;
   display: none;
-  transform: scaleX(-1); /* Flip horizontally */
+  transform: scaleX(-1); 
 }
 
 #feedText {
@@ -131,15 +131,15 @@ body {
   top: 16%;
 }
 .textBox {
-  font-size: 24px; /* Adjust font size as needed */
+  font-size: 24px;
   font-family: 'Gloria-Hallelujah-regular';
   font-weight: bold;
   position: absolute;
   top: 50%;
-  width: 40%; /* Adjust the width as needed */
+  width: 40%; 
   text-align: center;
-  z-index: 1000; /* Ensure it's above other elements */
-  color: white; /* Set the text color to white */
+  z-index: 1000; 
+  color: white;
 }
 
 .pop-in {
@@ -189,20 +189,20 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   display: block;
-  z-index: 999; /* Ensure it's above other elements */
-  pointer-events: none; /* Make it non-interactable */
+  z-index: 999; 
+  pointer-events: none; 
 }
 
 .dropArea {
   width: 200px;
   height: 200px;
-  border: 2px dashed blue; /* Add a dashed border to visualize the drop area */
+  border: 2px dashed blue;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 998; /* Ensure it's above other elements */
-  pointer-events: none; /* Make it non-interactable */
+  z-index: 998;
+  pointer-events: none;
 }
 
 .fade-out-subjects {
@@ -289,7 +289,7 @@ body.blackout #vignette {
       const currentGif = gifs[index];
 
       if (index === 6) {
-    // If it's the "chomp" gif, add the "fade-out" class to the subjects
+    // If it's the "chomp" gif, fade out
     document.querySelectorAll('.fade-out-subjects').forEach(subject => {
       subject.classList.add('fade-out');
     });
@@ -302,7 +302,7 @@ body.blackout #vignette {
       rightTextBox.style.display = 'block';
     }
 
-      // Resetting the gif to its initial frame
+      // Play gif at start
       currentGif.src = currentGif.src;
       currentGif.style.display = 'block';
 
@@ -377,7 +377,6 @@ body.blackout #vignette {
 }
 
 function blackOut() {
-  // Get references to the containers
   const leftContainer = document.getElementById('left-container');
   const rightContainer = document.getElementById('right-container');
   const bottomContainer = document.getElementById('bottom-container');
@@ -403,15 +402,14 @@ function handleDrop(event) {
     sabaFish.style.right = 'auto';
     sabaFish.style.bottom = 'auto';
 
-    // Declare variables in the correct scope
     const fishRect = sabaFish.getBoundingClientRect();
     const fishCenterX = fishRect.left + fishRect.width / 2;
     const fishCenterY = fishRect.top + fishRect.height / 2;
 
-    // Check if the fish is dropped in the middle
+    // Check if fish is dropped in the middle
     if (checkDropArea(fishCenterX, fishCenterY)) {
-      // Update the GIF and hide the fish
-      currentIndex = 6; // or any other index that corresponds to the desired GIF
+      // Update the GIF and hide fish
+      currentIndex = 6;
       showGif(currentIndex);
       sabaFish.style.display = 'none';
       feedText.style.display = 'none';
@@ -458,7 +456,6 @@ function checkDropArea(x, y) {
   }
 }
 
-// Get references to the red dot and drop area elements
 const redDot = document.getElementById('centerDot');
 const dropArea = document.querySelector('.dropArea');
 
@@ -475,7 +472,7 @@ function updateText(subjectText) {
   const leftTextBox = document.querySelector('.left');
   const rightTextBox = document.querySelector('.right');
 
-  // Update the text content based on the subject clicked
+  // Update the content based on the subject chosen
   leftTextBox.querySelector('p').textContent = subjectText;
   rightTextBox.querySelector('p').textContent = subjectText;
 }
@@ -532,7 +529,7 @@ function updateText(subjectText) {
 
 document.querySelectorAll('.subjects').forEach(img => {
   img.addEventListener('click', function () {
-    showMouthGif(); // Call the first function
+    showMouthGif();
     const subjectText = this.getAttribute('data-text');
     updateText(subjectText);
   });
