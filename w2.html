@@ -2,105 +2,587 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial_scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inactivity Monitor</title>
   <style>
-    #oneGif, #threeGif, #fourGif {
-      cursor: pointer;
-      display: none;
-      margin: auto;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+
+@font-face {
+  font-family: 'Gloria-Hallelujah-regular';
+  src: url('https://raw.githubusercontent.com/meownity/mer/main/GloriaHallelujah-Regular.ttf') format('truetype');
+}
+
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.6s ease-in-out;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#container {
+  text-align: center;
+  position: relative;
+}
+
+#container img {
+  cursor: url('https://github.com/meownity/mer/blob/main/point_paw.png?raw=true'), auto;
+  width: 60%; /* Adjust this value to control the size of the cat */
+  height: auto;
+  display: none;
+  bottom: 20px;
+  margin: 0 auto; /* Center the cat horizontally */
+}
+
+#tail {
+      position: relative;
+      top: -20px;
+      left: -10px; 
     }
 
-    #twoGif {
-        cursor: pointer;
-        display: none;
-        margin: auto;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-42%, -66%);
+#scared {
+      position: relative;
+      top: -90px; 
+      right: -20px; 
     }
 
-    #oneGif {
-      display: block;
-    }
+#right-container,
+#left-container,
+#bottom-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  transform: translate(0, -10%);
+}
 
-    #threeGif {
-        display : none;
-    }
+#left-container img,
+#bottom-container img {
+  max-width: 53%;
+  margin-top: 5px;
+}
 
-    .container {
-      width: 1000px;
-      height: 600px;
-    }
-  </style>
+#right-container img {
+    max-width: 38%;
+    transform: translate(-60%, -13%);
+    cursor: pointer;
+}
+
+#right-container #khmer {
+    max-width: 47%;
+    transform: translate(-48%, 3%);
+}
+
+#left-container img {
+    transform: translate(95%, 0);
+    cursor: pointer;
+}
+
+#bottom-container img {
+    transform: translate(-15%, -112%);
+    cursor: pointer;
+}
+
+#right-container {
+  right: 0;
+}
+
+#left-container {
+  left: 0;
+}
+
+#bottom-container {
+  bottom: 0;
+}
+
+#saba {
+  width: 20%;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  cursor: url('https://github.com/meownity/mer/blob/main/grab_paw.png?raw=true'), grab;
+  user-select: none;
+  display: none;
+  transform: scaleX(-1); /* Flip horizontally */
+}
+
+#feedText {
+  font-size: 35px;
+  display: none;
+  position: absolute;
+  top: 10%;
+  left: 100%;
+  transform: translateX(-100%);
+  white-space: nowrap;
+  font-family: 'Gloria-Hallelujah-regular'; 
+  font-weight: bold;
+  animation: scrollText 10s linear infinite;
+  text-shadow: -2px -2px 0 white, 2px -2px 0 white, -2px 2px 0 white, 2px 2px 0 white;
+}
+
+#leftTextBox {
+  left: -7%;
+  top: 16%;
+}
+
+#rightTextBox {
+  right: -7%;
+  top: 16%;
+}
+.textBox {
+  font-size: 24px; /* Adjust font size as needed */
+  font-family: 'Gloria-Hallelujah-regular';
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  width: 40%; /* Adjust the width as needed */
+  text-align: center;
+  z-index: 1000; /* Ensure it's above other elements */
+  color: white; /* Set the text color to white */
+}
+
+.pop-in {
+  animation: popIn 0.5s ease-out;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scrollText {
+  0% {
+    left: 110%;
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  95% {
+    opacity: 1;
+  }
+
+  100% {
+    left: -18%;
+    transform: translateX(0%);
+    opacity: 0;
+  }
+}
+
+#centerDot {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  z-index: 999; /* Ensure it's above other elements */
+  pointer-events: none; /* Make it non-interactable */
+}
+
+.dropArea {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed blue; /* Add a dashed border to visualize the drop area */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 998; /* Ensure it's above other elements */
+  pointer-events: none; /* Make it non-interactable */
+}
+
+.fade-out-subjects {
+  transition: opacity 0.7s ease-in-out;
+  opacity: 1;
+}
+
+.fade-out-subjects.fade-out {
+  opacity: 0;
+}
+
+#vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.96) 42%, rgba(0, 0, 0, 1) 100%);
+  pointer-events: none;
+  transition: opacity 0.1s ease-in-out;
+  opacity: 0;
+  z-index: 999;
+}
+
+body.blackout #vignette {
+  opacity: 1;
+}
+
+</style>
 </head>
 <body>
+  <div id="vignette"></div>
+  <div id="leftTextBox" class="textBox left" data-subject="Left Subject">
+    <p></p>
+  </div>
+  <div id="rightTextBox" class="textBox right" data-subject="Right Subject">
+    <p></p>
+  </div>
+  
   <div id="container">
-    <img id="oneGif" src="https://i.pinimg.com/originals/4d/99/48/4d99482d55497209e950a702c1a6610c.gif" alt="GIF" />
-    <img id="twoGif" src="https://i.pinimg.com/originals/34/e2/3e/34e23edb9c3dfc444158821285aace24.gif" alt="GIF" />
-    <img id="threeGif" onload="FUCK()" src="https://i.pinimg.com/originals/70/e0/95/70e0952acded3db0418a390cf1fc57a0.gif" alt="GIF" />
-    <img id="fourGif" src="https://i.pinimg.com/originals/06/e0/0d/06e00dec7aa08872c45cb221b49a80b9.gif" alt="GIF" />
+    <img id="tail" src="https://i.pinimg.com/originals/4d/99/48/4d99482d55497209e950a702c1a6610c.gif" alt="tail" />
+    <img id="scared" src="https://i.pinimg.com/originals/2b/f4/3e/2bf43ee7801bd0a1b96462e40c45f8e0.gif" alt="scared" />
+    <img id="fall-over" src="https://i.pinimg.com/originals/70/e0/95/70e0952acded3db0418a390cf1fc57a0.gif" alt="fall-over" />
+    <img id="sleep" src="https://i.pinimg.com/originals/06/e0/0d/06e00dec7aa08872c45cb221b49a80b9.gif" alt="sleep" />
+    <img id="mouth" src="https://i.pinimg.com/originals/7a/19/c9/7a19c92b1a7c0ec1b2569566192def46.gif" alt="mouth" />
+    <img id="blink" src="https://i.pinimg.com/originals/8c/4b/ef/8c4bef2306269af3ee069bdb7e2c9b15.gif" alt="blink" />
+    <img id="chomp" src="https://i.pinimg.com/originals/33/72/08/3372083f3401dfc0a73fc3260e7671c9.gif" alt="chomp" />
+    <img id="lights-out" src="https://i.pinimg.com/originals/5e/1f/5f/5e1f5f833e706899f2b7cbbfee28fca7.gif" alt="lights-out" />
+    <img id="sweat" src="https://i.pinimg.com/originals/4c/77/73/4c7773ac694c6e5f83a6a41c071f5ba9.gif" alt="sweat" />
   </div>
 
+  <div id="right-container" class="fade-out-subjects">
+    <img class="subjects" id="khmer" src="https://i.pinimg.com/564x/44/6a/f5/446af579bd3f74c64942bb39676bc7be.jpg" alt="khmer" data-text="Khmer Text"/>
+    <img class="subjects" id="provot" src="https://i.pinimg.com/564x/c5/59/27/c559273e71d98a8cdc72666bccc05022.jpg" alt="provot" data-text="Provot Text"/>
+    <img class="subjects" id="jiveak" src="https://i.pinimg.com/564x/1a/c5/c0/1ac5c0a5d50683026385159102452759.jpg" alt="jiveak" data-text="Jiveak Text"/>
+  </div>
+  <div id="left-container" class="fade-out-subjects">
+    <img class="subjects" id="knet" src="https://i.pinimg.com/736x/f7/e7/9e/f7e79e63973bc2d104b50afb4057ab5c.jpg" alt="knet" data-text="Knet Text"/>
+    <img class="subjects" id="ruub" src="https://i.pinimg.com/736x/fb/70/05/fb7005451310593c712f1f8767820f3f.jpg" alt="ruub" data-text="Ruub Text"/>
+    <img class="subjects" id="kimi" src="https://i.pinimg.com/736x/8d/01/66/8d01661a60b2d5a988c00ad2b877a3ba.jpg" alt="kimi" data-text="Kimi Text"/>
+  </div>
+  <div id="bottom-container" class="fade-out-subjects">
+    <img class="subjects" id="english" src="https://i.pinimg.com/736x/47/46/e1/4746e1205ad0b92e120d12e4f1348673.jpg" alt="english" data-text="English Text"/>
+  </div>
+
+  <img id="saba" draggable="true" src="https://github.com/meownity/mer/blob/main/saba.png?raw=true" alt="saba fish">
+  <p id="feedText">Feed the car 🐟</p>
+  <div class="dropArea" id="dropArea"></div>
+  <div id="centerDot"></div>
+
   <script>
+    const gifs = document.querySelectorAll('#tail, #scared, #fall-over, #sleep, #mouth, #blink, #chomp, #lights-out, #sweat');
+    let currentIndex = 0;
+    let timer;
+  
+    function hideAllGifs() {
+      gifs.forEach(gif => {
+        gif.style.display = 'none';
+      });
+    }
+  
+    function showGif(index) {
+      hideAllGifs();
+      const currentGif = gifs[index];
+
+      if (index === 6) {
+    // If it's the "chomp" gif, add the "fade-out" class to the subjects
+    document.querySelectorAll('.fade-out-subjects').forEach(subject => {
+      subject.classList.add('fade-out');
+    });
+    }
     
-    const oneGif = document.getElementById('oneGif');
-    const twoGif = document.getElementById('twoGif');
-    const threeGif = document.getElementById('threeGif');
-    const fourGif = document.getElementById('fourGif');
-
-    const gifDuration = 3500;
-
-    
-    oneGif.addEventListener('click', () => {
-      twoGif.style.display = 'block';
-      oneGif.style.display = 'none';
-      threeGif.style.display = 'none';
-      clearTimeout(timer);
-      startTimer();
-    });
-
-    twoGif.addEventListener('click', () => {
-      oneGif.style.display = 'block';
-      twoGif.style.display = 'none';
-      threeGif.style.display = 'none';
-      clearTimeout(timer);
-      startTimer();
-    });
-
-    fourGif.addEventListener('click', () => {
-      oneGif.style.display = 'none';
-      twoGif.style.display = 'block';
-      threeGif.style.display = 'none';
-      fourGif.style.display = 'none';
-      clearTimeout(timer);
-      startTimer();
-    });
-
-    function FUCK() {
-        threeGif.style.display = 'none';
+    if (index === 8){
+      const leftTextBox = document.querySelector('.left');
+      const rightTextBox = document.querySelector('.right');
+      leftTextBox.style.display = 'block';
+      rightTextBox.style.display = 'block';
     }
 
+      // Resetting the gif to its initial frame
+      currentGif.src = currentGif.src;
+      currentGif.style.display = 'block';
+
+      leftTextBox.classList.add('pop-in');
+      rightTextBox.classList.add('pop-in');
+
+    }
+  
     function startTimer() {
-      timer = setTimeout(() => {
-        if (threeGif.style.display === 'none') {
-          // Hide the currently displayed GIFs
-          oneGif.style.display = 'none';
-          twoGif.style.display = 'none';
-          threeGif.style.display = 'block';
-
-          timer = setTimeout(() => {
-            fourGif.style.display = 'block';
-            threeGif.style.display = 'none';}, 3000);
-        }
-      }, 6800); // Set timer to switch GIFs
+      clearTimeout(timer);
+      if (currentIndex === 0) {
+        timer = setTimeout(() => {
+          currentIndex = 2;
+          showGif(currentIndex);
+          setTimeout(() => {
+            currentIndex = 3;
+            showGif(currentIndex);
+          }, 3000);
+        }, 6000);
+      } else if (currentIndex === 1) {
+        timer = setTimeout(() => {
+          currentIndex = 2;
+          showGif(currentIndex);
+          setTimeout(() => {
+            currentIndex = 3;
+            showGif(currentIndex);
+          }, 3000);
+        }, 4640);
+      } else if (currentIndex === 3) {
+        return;
+      }
     }
-    startTimer(); // Start the initial timer
-  </script>
+
+    function stopTimer() {
+        clearTimeout(timer);
+    }
+
+    function showMouthGif() {
+        currentIndex = 4;
+        showGif(currentIndex);
+        stopTimer()
+        timer = setTimeout(() => {
+          saba.style.display = 'block';
+          feedText.style.display = 'block';
+        }, 450);
+        timer = setTimeout(() => {
+          currentIndex = 5;
+          showGif(currentIndex);
+          }, 1600);
+          
+    }
+    function checkDropArea(x, y) {
+  const dropArea = document.getElementById('dropArea');
+  const dropAreaRect = dropArea.getBoundingClientRect();
+  const dropAreaCenterX = dropAreaRect.left + dropAreaRect.width / 2;
+  const dropAreaCenterY = dropAreaRect.top + dropAreaRect.height / 2;
+  const dropAreaRadius = Math.min(dropAreaRect.width / 2, dropAreaRect.height / 2);
+
+  const distance = Math.sqrt(Math.pow(x - dropAreaCenterX, 2) + Math.pow(y - dropAreaCenterY, 2));
+  console.log('Fish Position:', x, y);
+  console.log('Drop Area Center:', dropAreaCenterX, dropAreaCenterY);
+  console.log('Drop Area Radius:', dropAreaRadius);
+  console.log('Distance:', distance);
+
+  if (distance <= dropAreaRadius) {
+    console.log('INSIDE');
+    return true;
+  } else {
+    console.log('OUTSIDE');
+    return false;
+  }
+}
+
+function blackOut() {
+  // Get references to the containers
+  const leftContainer = document.getElementById('left-container');
+  const rightContainer = document.getElementById('right-container');
+  const bottomContainer = document.getElementById('bottom-container');
+
+  document.body.style.backgroundColor = 'black';
+  leftContainer.style.display = 'none';
+  rightContainer.style.display = 'none';
+  bottomContainer.style.display = 'none';
+  document.body.classList.add('blackout');
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+
+  const droppedItem = event.dataTransfer.getData('text/plain');
+
+  if (droppedItem === 'saba') {
+    const xPos = event.clientX - sabaFish.clientWidth / 2;
+    const yPos = event.clientY - sabaFish.clientHeight / 2;
+
+    sabaFish.style.left = `${xPos}px`;
+    sabaFish.style.top = `${yPos}px`;
+    sabaFish.style.right = 'auto';
+    sabaFish.style.bottom = 'auto';
+
+    // Declare variables in the correct scope
+    const fishRect = sabaFish.getBoundingClientRect();
+    const fishCenterX = fishRect.left + fishRect.width / 2;
+    const fishCenterY = fishRect.top + fishRect.height / 2;
+
+    // Check if the fish is dropped in the middle
+    if (checkDropArea(fishCenterX, fishCenterY)) {
+      // Update the GIF and hide the fish
+      currentIndex = 6; // or any other index that corresponds to the desired GIF
+      showGif(currentIndex);
+      sabaFish.style.display = 'none';
+      feedText.style.display = 'none';
+      centerDot.style.display = 'none';
+      dropArea.style.display = 'none';
+      timer = setTimeout(() => {
+      blackOut();
+      currentIndex = 7;
+      showGif(currentIndex);
+      timer - setTimeout(() => {
+      currentIndex = 8;
+      showGif(currentIndex);
+      }, 2000)
+      }, 1000)
+
+      console.log('INSIDE Fish dropped at:', xPos, yPos);
+      console.log('Fish center:', fishCenterX, fishCenterY);
+    } else {
+      console.log('OUTSIDE Fish dropped at:', xPos, yPos);
+      console.log('Fish center:', fishCenterX, fishCenterY);
+    }
+  }
+}
+
+function checkDropArea(x, y) {
+  const dropArea = document.getElementById('dropArea');
+  const dropAreaRect = dropArea.getBoundingClientRect();
+  const dropAreaCenterX = dropAreaRect.left + dropAreaRect.width / 2;
+  const dropAreaCenterY = dropAreaRect.top + dropAreaRect.height / 2;
+  const dropAreaRadius = Math.min(dropAreaRect.width / 2, dropAreaRect.height / 2);
+
+  const distance = Math.sqrt(Math.pow(x - dropAreaCenterX, 2) + Math.pow(y - dropAreaCenterY, 2));
+  console.log('Fish Position:', x, y);
+  console.log('Drop Area Center:', dropAreaCenterX, dropAreaCenterY);
+  console.log('Drop Area Radius:', dropAreaRadius);
+  console.log('Distance:', distance);
+
+  if (distance <= dropAreaRadius) {
+    console.log('INSIDE');
+    return true;
+  } else {
+    console.log('OUTSIDE');
+    return false;
+  }
+}
+
+// Get references to the red dot and drop area elements
+const redDot = document.getElementById('centerDot');
+const dropArea = document.querySelector('.dropArea');
+
+redDot.style.display = 'none';
+dropArea.style.display = 'none';
+
+function toggleHelpHint(show) {
+  const isVisible = show !== undefined ? show : redDot.style.display === 'block';
+  redDot.style.display = isVisible ? 'block' : 'none';
+  dropArea.style.display = isVisible ? 'block' : 'none';
+}
+
+function updateText(subjectText) {
+  const leftTextBox = document.querySelector('.left');
+  const rightTextBox = document.querySelector('.right');
+
+  // Update the text content based on the subject clicked
+  leftTextBox.querySelector('p').textContent = subjectText;
+  rightTextBox.querySelector('p').textContent = subjectText;
+}
+
+    document.getElementById('tail').addEventListener('click', () => {
+      currentIndex = 1;
+      showGif(currentIndex);
+      clearTimeout(timer);
+      startTimer();
+    });
+  
+    document.getElementById('scared').addEventListener('click', () => {
+      currentIndex = 0;
+      showGif(currentIndex);
+      clearTimeout(timer);
+      startTimer();
+    });
+  
+    document.getElementById('fall-over').addEventListener('click', () => {
+      currentIndex = 1;
+      showGif(currentIndex);
+      clearTimeout(timer);
+      startTimer();
+    });
+  
+    document.getElementById('sleep').addEventListener('click', () => {
+      currentIndex = 1;
+      showGif(currentIndex);
+      clearTimeout(timer);
+      startTimer();
+    });
+
+    document.getElementById('mouth').addEventListener('click', () => {
+      currentIndex = 0;
+      showGif(currentIndex);
+      clearTimeout(timer);
+      startTimer();
+    });
+
+    document.getElementById('blink').addEventListener('click', () => {
+      currentIndex = 0;
+      showGif(currentIndex);
+      saba.style.display = 'none';
+      feedText.style.display = 'none';
+      clearTimeout(timer);
+      startTimer();
+    });
+
+    document.getElementById('sweat').addEventListener('click', () => {
+      currentIndex = 0;
+      showGif(currentIndex);
+      location.reload();
+    })
+
+document.querySelectorAll('.subjects').forEach(img => {
+  img.addEventListener('click', function () {
+    showMouthGif(); // Call the first function
+    const subjectText = this.getAttribute('data-text');
+    updateText(subjectText);
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const leftTextBox = document.querySelector('.left');
+  const rightTextBox = document.querySelector('.right');
+  leftTextBox.style.display = 'none';
+  rightTextBox.style.display = 'none';
+  console.log('DOM content loaded');
+});
+
+    const sabaFish = document.getElementById('saba');
+
+    sabaFish.addEventListener('dragstart', (event) => {
+    event.dataTransfer.setData('text/plain', 'saba');
+    toggleHelpHint(true);
+    });
+
+    document.body.addEventListener('dragover', (event) => {
+      event.preventDefault();
+    });
+
+    document.body.addEventListener('dragover', (event) => {
+      event.preventDefault();
+    });
+
+    document.body.addEventListener('drop', handleDrop);
+
+    const languages = ['Feed the car 🐟', 'Alimenta al gato 🐟', 'غذاء القطة 🐟', 'ឤេយចំណីឆ្មា 🐟'];
+    let currentLanguageIndex = 0;
+
+    function getNextLanguage() {
+      currentLanguageIndex = (currentLanguageIndex + 1) % languages.length;
+      return languages[currentLanguageIndex];
+    }
+
+    function updateFeedText() {
+      const feedText = document.getElementById('feedText');
+      feedText.textContent = getNextLanguage();
+    }
+
+    document.getElementById('feedText').addEventListener('animationiteration', () => {
+      updateFeedText();
+    });
+
+    showGif(currentIndex);
+    startTimer();
+
+  </script>  
 </body>
 </html>
